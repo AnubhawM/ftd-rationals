@@ -1,8 +1,10 @@
 package com.cooksys.ftd.assignments.objects;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class SimplifiedRational implements IRational {
+    private int numerator;
+	private int denominator;
     /**
      * Determines the greatest common denominator for the given values
      *
@@ -12,7 +14,22 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if a <= 0 or b < 0
      */
     public static int gcd(int a, int b) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	int gcd = 0;
+    	if (a <= 0 || b < 0) {
+    		throw new IllegalArgumentException();
+    	}
+    	for (int i = 1; i <= a; i++) {
+    		if (a % i == 0 && b % i == 0) {
+    			//a /= i;
+    			//b /= 2;
+    			gcd = i;
+    		}
+    		else {
+    			continue;
+    		}
+    	}
+    	return gcd;	
     }
 
     /**
@@ -29,7 +46,15 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public static int[] simplify(int numerator, int denominator) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	int[] simplified = new int[2];
+    	if (denominator == 0) {
+    		throw new IllegalArgumentException();
+    	}
+    	
+    	simplified[0] = numerator / gcd(numerator, denominator);
+    	simplified[1] = denominator / gcd(numerator, denominator);
+    	return simplified;
     }
 
     /**
@@ -45,7 +70,14 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public SimplifiedRational(int numerator, int denominator) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	simplify(numerator, denominator);
+    	if (denominator == 0) {
+    		throw new IllegalArgumentException();
+    	}
+    	this.numerator = numerator;
+    	this.denominator = denominator;
+    	
     }
 
     /**
@@ -53,7 +85,8 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public int getNumerator() {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	return numerator;
     }
 
     /**
@@ -61,7 +94,8 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public int getDenominator() {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	return denominator;
     }
 
     /**
@@ -77,7 +111,8 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public SimplifiedRational construct(int numerator, int denominator) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	return new SimplifiedRational(numerator, denominator);
     }
 
     /**
@@ -88,7 +123,13 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public boolean equals(Object obj) {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	if ((obj instanceof SimplifiedRational) && this.numerator == ((SimplifiedRational) obj).numerator && this.denominator == ((SimplifiedRational) obj).denominator) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 
     /**
@@ -100,6 +141,12 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    	if ((this.numerator > 0) && (this.denominator > 0) || (this.numerator < 0) && (this.denominator < 0)) {
+    		return (Math.abs(this.numerator) + "/" + Math.abs(this.denominator));
+    	}
+    	else {
+    		return ("-" + Math.abs(this.numerator) + "/" + Math.abs(this.denominator));
+    	}
     }
 }
