@@ -142,6 +142,11 @@ public class SimplifiedRational implements IRational {
     @Override
     public SimplifiedRational construct(int numerator, int denominator) throws IllegalArgumentException {
         //throw new NotImplementedException();
+    	
+    	if (denominator == 0) {
+    		throw new IllegalArgumentException();
+    	}
+    	
     	return new SimplifiedRational(numerator, denominator);
     }
 
