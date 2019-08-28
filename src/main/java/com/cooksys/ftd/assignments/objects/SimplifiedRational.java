@@ -19,16 +19,33 @@ public class SimplifiedRational implements IRational {
     	if (a <= 0 || b < 0) {
     		throw new IllegalArgumentException();
     	}
-    	for (int i = 1; i <= a; i++) {
-    		if (a % i == 0 && b % i == 0) {
-    			//a /= i;
-    			//b /= 2;
+    	
+    	/*
+    	int last;
+    	if (a <= b) {
+    		last = a;
+    	}
+    	else {
+    		last = b;
+    	}
+    	for (int i = 1; i <= last; i++) {
+    		if (a % i == 0 && b % i == 0) {	
     			gcd = i;
     		}
-    		else {
-    			continue;
-    		}
     	}
+    	*/
+    	
+    	//-------------------------
+    	// Algorithm taken from https://introcs.cs.princeton.edu/java/23recursion/Euclid.java.htmlw
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        //-------------------------
+        
+    	gcd = a;
+    	
     	return gcd;	
     }
 
@@ -52,8 +69,10 @@ public class SimplifiedRational implements IRational {
     		throw new IllegalArgumentException();
     	}
     	
-    	simplified[0] = numerator / gcd(numerator, denominator);
-    	simplified[1] = denominator / gcd(numerator, denominator);
+    	int gcd = gcd(Math.abs(numerator), Math.abs(denominator));
+    	
+    	simplified[0] = numerator / gcd;
+    	simplified[1] = denominator / gcd;
     	return simplified;
     }
 
@@ -71,12 +90,23 @@ public class SimplifiedRational implements IRational {
      */
     public SimplifiedRational(int numerator, int denominator) throws IllegalArgumentException {
         //throw new NotImplementedException();
-    	simplify(numerator, denominator);
+    	//simplify(numerator, denominator);
     	if (denominator == 0) {
     		throw new IllegalArgumentException();
     	}
-    	this.numerator = numerator;
-    	this.denominator = denominator;
+    	
+    	if (numerator == 0) {
+    		this.numerator = numerator;
+    		this.denominator = denominator;
+    	}
+    	
+    	if (numerator != 0) {
+    		this.numerator = simplify(numerator, denominator)[0];
+        	this.denominator = simplify(numerator, denominator)[1];
+    	}
+    	
+    	
+    	
     	
     }
 
